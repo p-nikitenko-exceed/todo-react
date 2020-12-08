@@ -1,23 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import TodoList from "./Todo/TodoList";
+import Header from "./Todo/Header";
+import Footer from "./Todo/Footer";
+import { func } from "prop-types";
+
+// при выполнении любого действия должно появляться уведомление с этим действием
 
 function App() {
+  const [todos, setTodos, setText] = React.useState([
+    { id: "1", done: false, text: "hi" },
+    { id: "2", done: false, text: "hi hi" },
+    { id: "3", done: false, text: "hi hi" },
+  ]);
+
+  function textChange({out}) {
+    setText(
+      todos.map((todo) => {
+        if (todo.text !== { out }) {
+          todo.text = { out };
+        }
+        return todo
+      })
+    );
+  }
+
+  function toggleTodo(id) {
+    setTodos(
+      todos.map((todo) => {
+        if (todo.id === id) {
+          todo.done = !todo.done;
+        }
+        return todo;
+      })
+    );
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <Header />
+      <TodoList todos={todos} onToggle={toggleTodo} textOut={textChange} />
+      <Footer />
     </div>
   );
 }
