@@ -8,22 +8,12 @@ import { func } from "prop-types";
 // при выполнении любого действия должно появляться уведомление с этим действием
 
 function App() {
-  const [todos, setTodos, setText] = React.useState([
-    { id: "1", done: false, text: "hi" },
-    { id: "2", done: false, text: "hi hi" },
-    { id: "3", done: false, text: "hi hi" },
-  ]);
+  const [todos, setTodos] = React.useState([]);
 
-  function textChange({out}) {
-    setText(
-      todos.map((todo) => {
-        if (todo.text !== { out }) {
-          todo.text = { out };
-        }
-        return todo
-      })
-    );
-  }
+  const addTodo = (todo) => {
+    setTodos([todo, ...todos]);
+    
+  };
 
   function toggleTodo(id) {
     setTodos(
@@ -34,13 +24,21 @@ function App() {
         return todo;
       })
     );
+   
   }
+  // const todoLeft = () => {
+  //   setTodos(todos.filter((todo) => !todo.done));
+  // };
+  
+  const deleteTodo = (id) => {
+    setTodos(todos.filter((todo) => todo.id !== id));
+  };
 
   return (
     <div className='App'>
-      <Header />
-      <TodoList todos={todos} onToggle={toggleTodo} textOut={textChange} />
-      <Footer />
+      <Header addElement={addTodo} />
+      <TodoList todos={todos} onToggle={toggleTodo} deleteTodo={deleteTodo} />
+      <Footer onChenge={todoLeft} />
     </div>
   );
 }
