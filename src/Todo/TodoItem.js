@@ -13,7 +13,7 @@ function TodoItem({ todo,onChange,deleteTodo }) {
   return (
     <li>
       
-      <span className={clases.join(' ')}>
+      <span className={clases.join(' ')} >
         <input type='checkBox' onChange={()=>onChange(todo.id)}/>
         {todo.text}
         <button onClick={()=>deleteTodo(todo.id)}>x</button>
