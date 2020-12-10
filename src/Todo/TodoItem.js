@@ -8,13 +8,15 @@ function TodoItem({ todo,onChange,deleteTodo }) {
     const clases = []
     if(todo.done){
       clases.push('complited')
-    }
+    }else{
+      clases.pop()
+    } 
 
   return (
     <li>
       
       <span className={clases.join(' ')} >
-        <input type='checkBox' onChange={()=>onChange(todo.id)}/>
+        <input type='checkBox' onChange={()=>onChange(todo.id)} />
         {todo.text}
         <button onClick={()=>deleteTodo(todo.id)}>x</button>
       </span>

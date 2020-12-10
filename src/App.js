@@ -9,30 +9,30 @@ import { func } from "prop-types";
 
 function App() {
   const [todos, setTodos] = React.useState([]);
-  const [todoFilter, setTodoFilter] = React.useState('all');
-  
+  const [todoFilter, setTodoFilter] = React.useState("all");
   let newTodos = [...todos];
+
+  if (todoFilter === "all") {
+    newTodos = todos;
+  } else if (todoFilter === "active") {
+    newTodos = todos.filter((todo) => !todo.done);
+  } else if (todoFilter === "done") {
+    newTodos = todos.filter((todo) => todo.done);
+  }
+  console.log("МАССИВ КОТОРЫЙ ДОЛЖЕН ОТРИСОВАТЬ", newTodos);
 
   const addTodo = (todo) => {
     setTodos([todo, ...todos]);
   };
 
-  let changeFilterDone = () => {
-    setTodoFilter( 'active' )
-    console.log(todoFilter)
+  let changeFilterActive = () => {
+    setTodoFilter("active");
   };
-
-  const showDone = () => {
-   
-    
-    if (todoFilter === "all") {
-      newTodos =todos
-    } else if (todoFilter.todoToShow === "done") {
-       newTodos= todos.filter((todo) => todo.done);
-    } else if (todoFilter === 'active') {
-       newTodos = todos.filter((todo) => !todo.done);
-    }
-    console.log('МАССИВ КОТОРЫЙ ДОЛЖЕН ОТРИСОВАТЬ',newTodos)
+  let changeFilterAll = () => {
+    setTodoFilter("all");
+  };
+  let changeFilterDone = () => {
+    setTodoFilter("done");
   };
 
   function toggleTodo(id) {
@@ -60,14 +60,17 @@ function App() {
         todos={newTodos}
         onToggle={toggleTodo}
         deleteTodo={deleteTodo}
-        done={showDone}
+        todoFilter={todoFilter}
       />
 
-      <Footer deleteDoneTodo={deleteAllDoneTodo} done={showDone} />
+      <Footer
+        deleteDoneTodo={deleteAllDoneTodo}
+        filterAll={changeFilterAll}
+        filterActive={changeFilterActive}
+        filterDone={changeFilterDone}
+      />
 
       <div>{todos.filter((todo) => !todo.done).length}</div>
-      <button onClick={()=>changeFilterDone()}>aaaa</button>
-      <button onClick={showDone}>xxx</button>
     </div>
   );
 }
