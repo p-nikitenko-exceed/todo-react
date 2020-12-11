@@ -19,12 +19,25 @@ function App() {
   } else if (todoFilter === "done") {
     newTodos = todos.filter((todo) => todo.done);
   }
+    
+
+    
+
+  
+  
   console.log("МАССИВ КОТОРЫЙ ДОЛЖЕН ОТРИСОВАТЬ", newTodos);
 
   const addTodo = (todo) => {
     setTodos([todo, ...todos]);
   };
 
+  let changeAllDone=()=>{setTodos(
+    newTodos = todos.map(todo=>{return{...todo,done:!todo.done}})
+    
+  )
+  console.log(newTodos)
+  }
+  
   let changeFilterActive = () => {
     setTodoFilter("active");
   };
@@ -55,7 +68,7 @@ function App() {
 
   return (
     <div className='App'>
-      <Header addElement={addTodo} />
+      <Header addElement={addTodo} doneAll={changeAllDone} all={changeFilterAll}/>
       <TodoList
         todos={newTodos}
         onToggle={toggleTodo}
@@ -69,7 +82,7 @@ function App() {
         filterActive={changeFilterActive}
         filterDone={changeFilterDone}
       />
-
+      
       <div>{todos.filter((todo) => !todo.done).length}</div>
     </div>
   );

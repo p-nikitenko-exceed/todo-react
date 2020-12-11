@@ -1,0 +1,16 @@
+.TodoItems{
+    list-style: none;
+
+  }
+  .TodoItems .delite{
+  
+    color:red;
+    cursor: pointer;
+    display: none;
+    
+  }
+  .TodoItems:hover .delite{
+    display: inline-block;
+  
+  }
+ 
