@@ -1,57 +1,84 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "./TodoItems.css";
-import { ToastContainer, toast } from "react-toastify";
 
+import { ToastContainer, toast } from "react-toastify";
+import "./../App.css";
 import "react-toastify/dist/ReactToastify.css";
 // import Header from './Header'
 //при наведении на элемент должна появляться кнопка удаления
 
-toast.configure()
-function TodoItem({ todo, onChange, deleteTodo }) {
+toast.configure();
+function TodoItem({ todo, onChange, deleteTodo, editText }) {
+  const [edit, setEdite] = React.useState("false");
+  const [title, editTitle] = React.useState("");
 
-  
-  const [edit,setEdite]=React.useState({
-    title:todo.text,
-    mode:false
-  })
-  console.log('state',edit)
-  let displayElement =''
- 
-  if(edit.mode===true){
-    displayElement = <input defaultValue={edit.title}  onChange={()=>{}}/>
-  } else{
-   displayElement = <span
-   style={{
-     textDecoration: todo.done ? "line-through" : "",
-     color: todo.done ? "rgb(127, 110, 86)" : "",
-   }}>
-   <input
-     type='checkBox'
-     onChange={() => onChange(todo.id)}
-     checked={todo.done}
-   />
-   {edit.title}
- </span>
+  const showInput = (event) => {
+    editTitle(event.target.value);
+    console.log("state", title);
+  };
+  let displayElement = "";
+
+  const chengeModeFalse = () => {
+    setEdite("false");
+  };
+
+  const chengeModeTrue = () => {
+    setEdite("true");
+  };
+  if (edit === "true") {
+    displayElement = (
+      <input
+        type="text"
+        defaultValue={todo.text}
+        onBlur={chengeModeFalse}
+        onChange={showInput}
+      />
+    );
+  } else {
+    displayElement = (
+      <span 
+        onDoubleClick={chengeModeTrue}
+        style={{
+          textDecoration: todo.done ? "line-through" : "",
+          color: todo.done ? "rgb(127, 110, 86)" : "",
+          marginTop:"0.5%",
+          fontSize:"30px",
+          
+          textIndent:"21px"
+          
+          
+        }}
+      >
+        {todo.text}
+      </span>
+    );
   }
-    
-  const chengeModeTrue=()=>{
-    setEdite(prevState=>({...prevState,mode:true}))
-  }
-  const chengeModeFalse=(event)=>{
-    let text=event.currentTarget.defaultValue
-    console.log('text',text)
-    setEdite(()=>({title:text,mode:false}))
-  }
-  const deleteTask=()=>{
-    toast('Task deleted')
-  }
+
+  let newText = title;
+
+  const deleteTask = () => {
+    toast("Task deleted");
+  };
 
   return (
-    <li className='TodoItems' onDoubleClick={chengeModeTrue} onBlur={chengeModeFalse}>
+    <li
+      className="TodoItems"
+      onBlur={() => {
+        editText(todo.id, newText);
+      }}
+    >
+      <input
+        type="checkBox"
+        onChange={() => onChange(todo.id)}
+        checked={todo.done}
+      />
       {displayElement}
-      <span className='delite' onClick={() => deleteTodo(todo.id)} onMouseDown={deleteTask}>x</span>
-        <ToastContainer/>
+      <span
+        className="delite"
+        onClick={() => deleteTodo(todo.id)}
+        onMouseDown={deleteTask}
+      >x</span>
+      <ToastContainer />
     </li>
   );
 }

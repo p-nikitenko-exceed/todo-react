@@ -19,25 +19,22 @@ function App() {
   } else if (todoFilter === "done") {
     newTodos = todos.filter((todo) => todo.done);
   }
-    
 
-    
-
-  
-  
   console.log("МАССИВ КОТОРЫЙ ДОЛЖЕН ОТРИСОВАТЬ", newTodos);
 
   const addTodo = (todo) => {
     setTodos([todo, ...todos]);
   };
 
-  let changeAllDone=()=>{setTodos(
-    newTodos = todos.map(todo=>{return{...todo,done:!todo.done}})
-    
-  )
-  console.log(newTodos)
-  }
-  
+  let changeAllDone = () => {
+    setTodos(
+      (newTodos = todos.map((todo) => {
+        return { ...todo, done: !todo.done };
+      }))
+    );
+    console.log(newTodos);
+  };
+
   let changeFilterActive = () => {
     setTodoFilter("active");
   };
@@ -65,25 +62,39 @@ function App() {
   const deleteAllDoneTodo = () => {
     setTodos(todos.filter((todo) => !todo.done));
   };
+  const editText = (id, newText) => {
+    newTodos = todos.filter((todo) => {
+      if (todo.id === id) {
+        todo.text = newText;
+      }
+    });
+  };
 
   return (
-    <div className='App'>
-      <Header addElement={addTodo} doneAll={changeAllDone} all={changeFilterAll}/>
+    <div className="App">
+      <h1 >todos</h1>
+      <Header
+        className='header'
+        addElement={addTodo}
+        doneAll={changeAllDone}
+        all={changeFilterAll}
+      />
       <TodoList
         todos={newTodos}
         onToggle={toggleTodo}
         deleteTodo={deleteTodo}
         todoFilter={todoFilter}
+        edit={editText}
       />
-
+      <div id='items-left'>{todos.filter((todo) => !todo.done).length} items left</div>
       <Footer
         deleteDoneTodo={deleteAllDoneTodo}
         filterAll={changeFilterAll}
         filterActive={changeFilterActive}
         filterDone={changeFilterDone}
       />
+
       
-      <div>{todos.filter((todo) => !todo.done).length}</div>
     </div>
   );
 }
