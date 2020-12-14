@@ -45,18 +45,20 @@
   flex-shrink: 1;
   width: 99%;
   outline: none;
-  text-indent: 10px;
+  text-indent: 35px;
   font-size: 20px;
   border: none;
   background-color: rgb(255, 252, 252);
   
+  
+  
 }
 .Header-all-done{
   
+  display: flex;
   padding: 5px 0px 5px 10px;
-  box-shadow: inset 0 -2px 1px rgba(0,0,0,0.03);
   
-  
+ 
 }
 
 .TodoList{
@@ -104,6 +106,9 @@
   content: '\FE40';
   color: gray;
   
+  position: relative;
+  top: 35px;
+
 }
 
 
