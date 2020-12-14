@@ -72,26 +72,30 @@ function App() {
 
   return (
     <div className="App">
-      <h1 >todos</h1>
+      
       <Header
         className='header'
         addElement={addTodo}
         doneAll={changeAllDone}
         all={changeFilterAll}
+        newTodos={newTodos}
       />
       <TodoList
+        className='TodoList'
         todos={newTodos}
         onToggle={toggleTodo}
         deleteTodo={deleteTodo}
         todoFilter={todoFilter}
         edit={editText}
       />
-      <div id='items-left'>{todos.filter((todo) => !todo.done).length} items left</div>
+      
       <Footer
+        className='Footer'
         deleteDoneTodo={deleteAllDoneTodo}
         filterAll={changeFilterAll}
         filterActive={changeFilterActive}
         filterDone={changeFilterDone}
+        todos={newTodos}
       />
 
       

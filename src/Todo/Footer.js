@@ -1,36 +1,40 @@
 import React from "react";
 import "./TodoItems.css";
-import { ToastContainer, toast } from "react-toastify";
 
 //после добавления элемента TodoItem в TodoList должна появиться кнопка "clear complited"
 // счетчик всегда показывает количество 'undone task'
 
-toast.configure()
+function Footer({
+  todos,
+  filterAll,
+  deleteDoneTodo,
+  filterDone,
+  filterActive,
+}) {
+  let displayElement = "";
+  console.log("hi", todos);
+  if (todos.length > 0) {
+    displayElement = (
+      <div className='Footer-button'>
+        <div id='items-left'>{todos.filter((todo) => !todo.done).length} items left</div>
+        <button onClick={() => filterAll()}>All</button>
+        <button onClick={() => filterActive()}>Active</button>
+        <button onClick={() => filterDone()}>Completed</button>
+        <button id='delete-all' onClick={() => deleteDoneTodo()}>Clear all completed</button>
+      </div>
+    );
+  } else {
+    displayElement = (
+      <div className='Footer-button'>
+        <div id='items-left'>{todos.filter((todo) => !todo.done).length} items left</div>
+        <button onClick={() => filterAll()}>All</button>
+        <button onClick={() => filterActive()}>Active</button>
+        <button onClick={() => filterDone()}>Completed</button>
+      </div>
+    );
+  }
 
-function Footer({ filterAll, deleteDoneTodo, filterDone, filterActive }) {
-  
-  const deleteAllDone=()=>{
-    toast('All complete task deleted')
-  }
-  // const all=()=>{
-  //   toast('View all task')
-  // }
-  const active=()=>{
-    toast('View only activ task')
-  }
-  const done=()=>{
-    toast('View only completed task')
-  }
-  
-  return (
-    <div>
-      <button onClick={() => filterAll()} >all</button>
-      <button onClick={() => filterActive()} onFocus={active}>active</button>
-      <button onClick={() => filterDone()} onFocus={done}>done</button>
-      <button onClick={() => deleteDoneTodo()} onFocus={deleteAllDone}>delete all done </button>
-      <ToastContainer/>    
-    </div>
-  );
+  return <div className='Footer'>{displayElement}</div>;
 }
 
 export default Footer;

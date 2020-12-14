@@ -28,7 +28,7 @@ function TodoItem({ todo, onChange, deleteTodo, editText }) {
   if (edit === "true") {
     displayElement = (
       <input
-        type="text"
+        type='text'
         defaultValue={todo.text}
         onBlur={chengeModeFalse}
         onChange={showInput}
@@ -36,19 +36,16 @@ function TodoItem({ todo, onChange, deleteTodo, editText }) {
     );
   } else {
     displayElement = (
-      <span 
+      <span
         onDoubleClick={chengeModeTrue}
         style={{
           textDecoration: todo.done ? "line-through" : "",
-          color: todo.done ? "rgb(127, 110, 86)" : "",
-          marginTop:"0.5%",
-          fontSize:"30px",
-          
-          textIndent:"21px"
-          
-          
-        }}
-      >
+          color: todo.done ? "gray" : "",
+          marginTop: "0.5%",
+          fontSize: "30px",
+
+          textIndent: "21px",
+        }}>
         {todo.text}
       </span>
     );
@@ -57,28 +54,35 @@ function TodoItem({ todo, onChange, deleteTodo, editText }) {
   let newText = title;
 
   const deleteTask = () => {
-    toast("Task deleted");
+    toast.error("Task deleted");
+  };
+  const editTask = () => {
+    toast.info("Edit task");
   };
 
   return (
     <li
-      className="TodoItems"
+      
+      className='TodoItems'
       onBlur={() => {
         editText(todo.id, newText);
-      }}
-    >
-      <input
-        type="checkBox"
-        onChange={() => onChange(todo.id)}
-        checked={todo.done}
-      />
-      {displayElement}
-      <span
-        className="delite"
+      }}>
+      <div className='TodoItems-checkBox'>
+       
+        <input id='check' checked hidden
+          type='checkBox'
+          onChange={() => onChange(todo.id)}
+          checked={todo.done}
+        />
+        <label for='chech' onClick={() => onChange(todo.id)}></label>
+      </div>
+
+      <div className='TodoItems-span' onDoubleClick={editTask}> {displayElement}   </div>
+      <div className='TodoItems-span-delite'>  <span
         onClick={() => deleteTodo(todo.id)}
-        onMouseDown={deleteTask}
-      >x</span>
-      <ToastContainer />
+        onMouseDown={deleteTask}>
+        x</span>   </div>
+      
     </li>
   );
 }
